@@ -374,6 +374,7 @@ GameObject:
   - component: {fileID: 627463831}
   - component: {fileID: 627463838}
   - component: {fileID: 627463837}
+  - component: {fileID: 627463840}
   - component: {fileID: 627463836}
   m_Layer: 0
   m_Name: Player
@@ -545,6 +546,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GravityObject
 --- !u!114 &627463839
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 627463830}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6848dfb7f393673499a04bd11291bde0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerGravityAlign
+  rotationSpeed: 10
+--- !u!114 &627463840
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -808,6 +822,7 @@ GameObject:
   - component: {fileID: 961739752}
   - component: {fileID: 961739751}
   - component: {fileID: 961739750}
+  - component: {fileID: 961739755}
   - component: {fileID: 961739754}
   m_Layer: 0
   m_Name: Main Camera
@@ -941,12 +956,35 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 961739749}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f18ccf3263bc0ad4b924a6a895a50c92, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraController
   mouseSensitivity: 100
+  player: {fileID: 627463835}
+  distance: 4
+  minDistance: 1
+  maxDistance: 10
+  zoomSpeed: 2
+  height: 1.5
+--- !u!114 &961739755
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 961739749}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f87714b7427acc42bf6780854dd1c01, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::sitennwodounikasuruze
+  mouseSensitivity: 5
+  minDistance: 2
+  maxDistance: 15
+  zoomSpeed: 5
+  zoomSmoothTime: 0.1
   player: {fileID: 627463835}
   distance: 4
   height: 1.5
