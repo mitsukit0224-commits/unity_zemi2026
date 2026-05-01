@@ -41,25 +41,31 @@ public class GravityManager : MonoBehaviour
         var keyboard = Keyboard.current;
         if (keyboard == null) return;
 
-        // プレイヤーの向きを取得（カメラ基準で相対的に重力を変える）
         Transform playerTransform = Camera.main.transform;
 
+        // 矢印キーで前後左右
         if (keyboard.upArrowKey.wasPressedThisFrame)
-            SetGravity(playerTransform.forward);   // 現在の前方向へ
+            SetGravity(playerTransform.forward);
 
         if (keyboard.downArrowKey.wasPressedThisFrame)
-            SetGravity(-playerTransform.forward);  // 現在の後ろ方向へ
+            SetGravity(-playerTransform.forward);
 
         if (keyboard.leftArrowKey.wasPressedThisFrame)
-            SetGravity(-playerTransform.right);    // 現在の左方向へ
+            SetGravity(-playerTransform.right);
 
         if (keyboard.rightArrowKey.wasPressedThisFrame)
-            SetGravity(playerTransform.right);     // 現在の右方向へ
+            SetGravity(playerTransform.right);
+
+        // F/Spaceキーで上下
+        if (keyboard.fKey.wasPressedThisFrame)
+            SetGravity(Vector3.up);      // 天井へ（上方向）
+
+        if (keyboard.spaceKey.wasPressedThisFrame)
+            SetGravity(Vector3.down);    // 床へ（通常）
     }
 
     void SetGravity(Vector3 newDirection)
     {
-        // 最も近い軸にスナップ（斜めにならないように）
         newDirection = SnapToAxis(newDirection);
         GravityDirection = newDirection;
 
@@ -73,7 +79,6 @@ public class GravityManager : MonoBehaviour
         }
     }
 
-    // 最も近いワールド軸（上下左右前後）にスナップする
     Vector3 SnapToAxis(Vector3 direction)
     {
         Vector3[] axes = {
