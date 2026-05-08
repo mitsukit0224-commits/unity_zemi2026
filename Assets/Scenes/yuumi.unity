@@ -270,6 +270,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CameraTransparency
   player: {fileID: 999388452}
   transparentAlpha: 1
+  transparentMaterial: {fileID: 2100000, guid: c6d4a71bc15c3a94bbb09c6b5c957042, type: 2}
 --- !u!1 &349714287
 GameObject:
   m_ObjectHideFlags: 0

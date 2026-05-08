@@ -6,6 +6,7 @@ public class CameraTransparency : MonoBehaviour
     public Transform player;
     [Range(0f, 1f)]
     public float transparentAlpha = 0.3f;
+    public Material transparentMaterial; // InspectorでTransparentMatをアサイン
 
     private Dictionary<Renderer, Material[]> originalMaterials = new Dictionary<Renderer, Material[]>();
     private List<Renderer> currentTransparent = new List<Renderer>();
@@ -52,24 +53,11 @@ public class CameraTransparency : MonoBehaviour
     {
         originalMaterials[rend] = rend.sharedMaterials;
 
+        // TransparentMatに差し替え
         Material[] newMats = new Material[rend.sharedMaterials.Length];
-        for (int i = 0; i < rend.sharedMaterials.Length; i++)
+        for (int i = 0; i < newMats.Length; i++)
         {
-            Material newMat = new Material(rend.sharedMaterials[i]);
-
-            // URPの透明化設定
-            newMat.SetFloat("_Surface", 1f);
-            newMat.SetFloat("_Blend", 0f);
-            newMat.SetFloat("_AlphaClip", 0f);
-            newMat.SetOverrideTag("RenderType", "Transparent");
-            newMat.renderQueue = (int)UnityEngine.Rendering.RenderQueue.Transparent;
-            newMat.EnableKeyword("_SURFACE_TYPE_TRANSPARENT");
-
-            Color color = newMat.color;
-            color.a = transparentAlpha;
-            newMat.color = color;
-
-            newMats[i] = newMat;
+            newMats[i] = transparentMaterial;
         }
         rend.materials = newMats;
     }
