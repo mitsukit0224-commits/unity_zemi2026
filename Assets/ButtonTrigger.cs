@@ -8,12 +8,33 @@ public class ButtonTrigger : MonoBehaviour
 
     private bool isPressed = false;
 
-    void OnCollisionEnter(Collision other)
+    void OnTriggerEnter(Collider other)
     {
-        Debug.Log($"ボタンに触れた！ オブジェクト:{other.gameObject.name}");
-
         if (isPressed) return;
 
+        // 親をさかのぼってPlayerタグを探す
+        Transform current = other.transform;
+        bool isPlayer = false;
+
+        while (current != null)
+        {
+            if (current.CompareTag("Player"))
+            {
+                isPlayer = true;
+                break;
+            }
+            current = current.parent;
+        }
+
+        // プレイヤーが触れた場合は反応しない
+        if (isPlayer)
+        {
+            Debug.Log("プレイヤーが触れましたが反応しません！");
+            return;
+        }
+
+        // プレイヤー以外のオブジェクトが触れた場合
+        Debug.Log($"オブジェクトがボタンに触れました！:{other.gameObject.name}");
         isPressed = true;
         OnButtonPressed();
     }
