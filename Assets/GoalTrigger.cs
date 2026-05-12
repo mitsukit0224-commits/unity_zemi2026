@@ -1,9 +1,14 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GoalTrigger : MonoBehaviour
 {
     [Header("クリア設定")]
     public GameObject clearUI;
+
+    [Header("次のステージ設定")]
+    public string nextSceneName = "Stage2"; // 次のシーン名
+    public float waitTime = 2f; // クリアUIを表示してから遷移するまでの秒数
 
     private bool isCleared = false;
     private bool isActive = false;
@@ -11,7 +16,6 @@ public class GoalTrigger : MonoBehaviour
     void Start()
     {
         SetGoalActive(false);
-        Debug.Log("ゴール初期化！無効状態でスタート");
     }
 
     public void SetGoalActive(bool active)
@@ -30,13 +34,7 @@ public class GoalTrigger : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        Debug.Log($"ゴールに触れた！ オブジェクト:{other.gameObject.name} isActive:{isActive}");
-
-        if (!isActive)
-        {
-            Debug.Log("ゴールがまだ無効です！");
-            return;
-        }
+        if (!isActive) return;
 
         Transform current = other.transform;
         bool isPlayer = false;
@@ -51,8 +49,6 @@ public class GoalTrigger : MonoBehaviour
             current = current.parent;
         }
 
-        Debug.Log($"プレイヤー判定:{isPlayer}");
-
         if (isPlayer && !isCleared)
         {
             isCleared = true;
@@ -66,8 +62,6 @@ public class GoalTrigger : MonoBehaviour
 
         if (clearUI != null)
             clearUI.SetActive(true);
-        else
-            Debug.LogWarning("clearUIが設定されていません！");
 
         var playerMovement = FindObjectOfType<PlayerMovement>();
         if (playerMovement != null)
@@ -79,5 +73,25 @@ public class GoalTrigger : MonoBehaviour
 
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
+
+        // 次のシーンへ遷移
+        Invoke("LoadNextScene", waitTime);
+    }
+
+    void LoadNextScene()
+    {
+        if (string.IsNullOrEmpty(nextSceneName))
+        {
+            // シーン名が空の場合は次のインデックスへ
+            int nextIndex = SceneManager.GetActiveScene().buildIndex + 1;
+            if (nextIndex < SceneManager.sceneCountInBuildSettings)
+                SceneManager.LoadScene(nextIndex);
+            else
+                Debug.Log("次のシーンがありません！");
+        }
+        else
+        {
+            SceneManager.LoadScene(nextSceneName);
+        }
     }
 }

@@ -398,6 +398,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GoalTrigger
   clearUI: {fileID: 229690813}
+  nextSceneName: c
+  waitTime: 2
 --- !u!1 &203844586
 GameObject:
   m_ObjectHideFlags: 0
@@ -817,7 +819,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 941274b113caff3449eef45585b200a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
-  moveSpeed: 5
+  moveSpeed: 7
   rotationSpeed: 100
 --- !u!114 &312211553
 MonoBehaviour:
@@ -1709,9 +1711,6 @@ PrefabInstance:
       addedObject: {fileID: 683284537}
     - targetCorrespondingSourceObject: {fileID: 65702495048144492, guid: 05e79abcb1e40e9449e03e77661cee90, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1185531142}
-    - targetCorrespondingSourceObject: {fileID: 65702495048144492, guid: 05e79abcb1e40e9449e03e77661cee90, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 1572342413}
     - targetCorrespondingSourceObject: {fileID: -3996110647418995180, guid: 05e79abcb1e40e9449e03e77661cee90, type: 3}
       insertIndex: -1
@@ -1766,25 +1765,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 65702495048144492, guid: 05e79abcb1e40e9449e03e77661cee90, type: 3}
   m_PrefabInstance: {fileID: 1185531139}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1185531142
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1185531141}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f18ccf3263bc0ad4b924a6a895a50c92, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CameraController
-  mouseSensitivity: 100
-  player: {fileID: 312211548}
-  distance: 4
-  minDistance: 1
-  maxDistance: 10
-  zoomSpeed: 2
-  height: 1.5
 --- !u!114 &1185531145
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2154,8 +2134,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aec14dbbc7335074aa30c2925f2d1474, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraTransparency
-  player: {fileID: 312211548}
-  transparentAlpha: 0.3
 --- !u!1 &1617150780 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -3996110647418995180, guid: 05e79abcb1e40e9449e03e77661cee90, type: 3}
