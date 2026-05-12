@@ -8,7 +8,7 @@ public class TopDownCamera : MonoBehaviour
 
     [Header("── ズーム ──")]
     public float minDistance    = 2f;
-    public float maxDistance    = 15f;
+    public float maxDistance    = 60f;
     public float zoomSpeed      = 5f;
     public float zoomSmoothTime = 0.1f;
 
@@ -16,7 +16,7 @@ public class TopDownCamera : MonoBehaviour
     public Transform player;
 
     [Header("── カメラ位置 ──")]
-    public float distance = 8f;
+    public float distance = 40f;
     public float height   = 1.5f;
 
     private float xRotation       = 20f;
