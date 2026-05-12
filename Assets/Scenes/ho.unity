@@ -754,6 +754,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: fffc00cbd557ce745819fb9df0991de3, type: 3}
       insertIndex: -1
       addedObject: {fileID: 312211550}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: fffc00cbd557ce745819fb9df0991de3, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 312211555}
   m_SourcePrefab: {fileID: 100100000, guid: fffc00cbd557ce745819fb9df0991de3, type: 3}
 --- !u!4 &312211548 stripped
 Transform:
@@ -822,7 +825,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 312211549}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 941274b113caff3449eef45585b200a8, type: 3}
   m_Name: 
@@ -854,6 +857,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17e6c151b4ef3594c88ce4b353b08abc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GravityObject
+--- !u!114 &312211555
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 312211549}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2860d4a151ecf96438e92dc02cf7ab28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement1
+  moveSpeed: 5
+  acceleration: 12
+  deceleration: 16
+  rotationSpeed: 100
 --- !u!1 &475490856
 GameObject:
   m_ObjectHideFlags: 0
@@ -1670,6 +1689,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: Button
       objectReference: {fileID: 0}
+    - target: {fileID: -1853094968961178454, guid: 05e79abcb1e40e9449e03e77661cee90, type: 3}
+      propertyPath: m_ClearFlags
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -1853094968961178454, guid: 05e79abcb1e40e9449e03e77661cee90, type: 3}
+      propertyPath: m_BackGroundColor.b
+      value: 0.542
+      objectReference: {fileID: 0}
+    - target: {fileID: -1853094968961178454, guid: 05e79abcb1e40e9449e03e77661cee90, type: 3}
+      propertyPath: m_BackGroundColor.g
+      value: 0.39983603
+      objectReference: {fileID: 0}
+    - target: {fileID: -1853094968961178454, guid: 05e79abcb1e40e9449e03e77661cee90, type: 3}
+      propertyPath: m_BackGroundColor.r
+      value: 0.30802184
+      objectReference: {fileID: 0}
     - target: {fileID: -585407558126863456, guid: 05e79abcb1e40e9449e03e77661cee90, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -2149,8 +2184,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aec14dbbc7335074aa30c2925f2d1474, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraTransparency
-  player: {fileID: 0}
-  transparentAlpha: 0.2
 --- !u!114 &1572342417
 MonoBehaviour:
   m_ObjectHideFlags: 0
