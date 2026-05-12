@@ -249,15 +249,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TopDownCamera
   mouseSensitivity: 5
-  minDistance: 8
+  minDistance: 2
   maxDistance: 60
   zoomSpeed: 5
   zoomSmoothTime: 0.1
   player: {fileID: 999388452}
   distance: 40
   height: 1.5
-  transparentAlpha: 0.3
-  transparentMaterial: {fileID: 0}
 --- !u!1 &349714287
 GameObject:
   m_ObjectHideFlags: 0
@@ -835,6 +833,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -2144990787317247848, guid: 05e79abcb1e40e9449e03e77661cee90, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1264514387}
+    - targetCorrespondingSourceObject: {fileID: -2144990787317247848, guid: 05e79abcb1e40e9449e03e77661cee90, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1264514390}
   m_SourcePrefab: {fileID: 100100000, guid: 05e79abcb1e40e9449e03e77661cee90, type: 3}
 --- !u!1 &1264514374 stripped
 GameObject:
@@ -892,7 +893,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1264514374}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 941274b113caff3449eef45585b200a8, type: 3}
   m_Name: 
@@ -961,6 +962,22 @@ CapsuleCollider:
   m_Height: 0.019999988
   m_Direction: 1
   m_Center: {x: -0.000000003259629, y: 0.0000000032596283, z: 0}
+--- !u!114 &1264514390
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1264514374}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2860d4a151ecf96438e92dc02cf7ab28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement1
+  moveSpeed: 5
+  acceleration: 12
+  deceleration: 16
+  rotationSpeed: 100
 --- !u!1 &1319499658
 GameObject:
   m_ObjectHideFlags: 0
