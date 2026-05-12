@@ -6,21 +6,38 @@ public class GoalTrigger : MonoBehaviour
     public GameObject clearUI;
 
     private bool isCleared = false;
+    private bool isActive = false;
 
     void Start()
     {
-        Collider col = GetComponent<Collider>();
-        if (col == null)
-            Debug.LogError("Colliderがありません！");
-        else
-            Debug.Log($"Collider確認OK！ IsTrigger:{col.isTrigger}");
+        SetGoalActive(false);
+        Debug.Log("ゴール初期化！無効状態でスタート");
+    }
+
+    public void SetGoalActive(bool active)
+    {
+        isActive = active;
+        Debug.Log($"ゴール状態変更！ isActive:{isActive}");
+
+        Renderer renderer = GetComponent<Renderer>();
+        if (renderer != null)
+        {
+            Color color = renderer.material.color;
+            color.a = active ? 1f : 0.3f;
+            renderer.material.color = color;
+        }
     }
 
     void OnTriggerEnter(Collider other)
     {
-        Debug.Log($"触れたオブジェクト:{other.gameObject.name}");
+        Debug.Log($"ゴールに触れた！ オブジェクト:{other.gameObject.name} isActive:{isActive}");
 
-        // 触れたオブジェクトから親をさかのぼってPlayerタグを探す
+        if (!isActive)
+        {
+            Debug.Log("ゴールがまだ無効です！");
+            return;
+        }
+
         Transform current = other.transform;
         bool isPlayer = false;
 
@@ -33,6 +50,8 @@ public class GoalTrigger : MonoBehaviour
             }
             current = current.parent;
         }
+
+        Debug.Log($"プレイヤー判定:{isPlayer}");
 
         if (isPlayer && !isCleared)
         {
