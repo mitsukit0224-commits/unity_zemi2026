@@ -11,6 +11,12 @@ public class GravityManager : MonoBehaviour
 
     private static List<Rigidbody> affectedBodies = new List<Rigidbody>();
 
+    void Start()
+    {
+        GravityDirection = Vector3.down;
+        //affectedBodies.Clear();
+    }
+
     public static void Register(Rigidbody rb)
     {
         if (!affectedBodies.Contains(rb))
@@ -41,9 +47,10 @@ public class GravityManager : MonoBehaviour
         var keyboard = Keyboard.current;
         if (keyboard == null) return;
 
+        if (Camera.main == null) return;
+
         Transform playerTransform = Camera.main.transform;
 
-        // 矢印キーで前後左右
         if (keyboard.upArrowKey.wasPressedThisFrame)
             SetGravity(playerTransform.forward);
 
@@ -56,12 +63,11 @@ public class GravityManager : MonoBehaviour
         if (keyboard.rightArrowKey.wasPressedThisFrame)
             SetGravity(playerTransform.right);
 
-        // F/Spaceキーで上下
         if (keyboard.fKey.wasPressedThisFrame)
-            SetGravity(Vector3.up);      // 天井へ（上方向）
+            SetGravity(Vector3.up);
 
         if (keyboard.spaceKey.wasPressedThisFrame)
-            SetGravity(Vector3.down);    // 床へ（通常）
+            SetGravity(Vector3.down);
     }
 
     void SetGravity(Vector3 newDirection)
@@ -71,10 +77,42 @@ public class GravityManager : MonoBehaviour
 
         foreach (var rb in affectedBodies)
         {
-            if (rb != null)
+            if (rb == null) continue;
+
+            rb.linearVelocity = Vector3.zero;
+            rb.angularVelocity = Vector3.zero;
+
+            PushOutFromCollision(rb);
+        }
+    }
+
+    void PushOutFromCollision(Rigidbody rb)
+    {
+        Collider[] colliders = rb.GetComponents<Collider>();
+
+        foreach (var col in colliders)
+        {
+            Collider[] overlapping = Physics.OverlapBox(
+                rb.position,
+                col.bounds.extents * 0.9f,
+                rb.rotation
+            );
+
+            foreach (var other in overlapping)
             {
-                float gravitySpeed = Vector3.Dot(rb.linearVelocity, GravityDirection);
-                rb.linearVelocity -= GravityDirection * gravitySpeed;
+                if (other.attachedRigidbody == rb) continue;
+                if (other.isTrigger) continue;
+
+                Vector3 direction;
+                float distance;
+
+                if (Physics.ComputePenetration(
+                    col, rb.position, rb.rotation,
+                    other, other.transform.position, other.transform.rotation,
+                    out direction, out distance))
+                {
+                    rb.position += direction * (distance + 0.01f);
+                }
             }
         }
     }

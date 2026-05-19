@@ -7,16 +7,16 @@ public class GravityObject : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        rb.useGravity = false; // デフォルト重力をオフ
+        rb.useGravity = false;
         rb.freezeRotation = true;
+        rb.linearVelocity = Vector3.zero;
+        rb.angularVelocity = Vector3.zero;
 
-        // GravityManagerに登録
         GravityManager.Register(rb);
     }
 
     void OnDestroy()
     {
-        // オブジェクト削除時に登録解除
         GravityManager.Unregister(rb);
     }
 }
