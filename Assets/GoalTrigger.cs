@@ -5,30 +5,66 @@ public class GoalTrigger : MonoBehaviour
 {
     [Header("クリア設定")]
     public GameObject clearUI;
+    public string nextSceneName = "";
+    public float waitTime = 2f;
 
-    [Header("次のステージ設定")]
-    public string nextSceneName = "Stage2"; // 次のシーン名
-    public float waitTime = 2f; // クリアUIを表示してから遷移するまでの秒数
+    [Header("色の設定")]
+    public Color inactiveColor = new Color(1f, 1f, 1f, 0.3f);
+    public Color activeColor   = new Color(0f, 1f, 0f, 1f);
+
+    [Header("パーティクル設定")]
+    public ParticleSystem goalParticle; // InspectorでGoalParticleをアサイン
 
     private bool isCleared = false;
-    private bool isActive = false;
+    private bool isActive  = false;
+    private Renderer goalRenderer;
+    private Material goalMaterial;
 
     void Start()
     {
+        goalRenderer = GetComponent<Renderer>();
+
+        if (goalRenderer != null)
+        {
+            goalMaterial = new Material(goalRenderer.material);
+            goalRenderer.material = goalMaterial;
+        }
+
         SetGoalActive(false);
     }
 
     public void SetGoalActive(bool active)
     {
         isActive = active;
-        Debug.Log($"ゴール状態変更！ isActive:{isActive}");
 
-        Renderer renderer = GetComponent<Renderer>();
-        if (renderer != null)
+        if (goalMaterial != null)
         {
-            Color color = renderer.material.color;
-            color.a = active ? 1f : 0.3f;
-            renderer.material.color = color;
+            if (active)
+            {
+                goalMaterial.color = activeColor;
+                goalMaterial.EnableKeyword("_EMISSION");
+                goalMaterial.SetColor("_EmissionColor", activeColor * 2f);
+            }
+            else
+            {
+                goalMaterial.color = inactiveColor;
+                goalMaterial.DisableKeyword("_EMISSION");
+            }
+        }
+
+        // パーティクルをボタンが押されたら再生
+        if (goalParticle != null)
+        {
+            if (active)
+            {
+                goalParticle.gameObject.SetActive(true);
+                goalParticle.Play();
+                Debug.Log("パーティクル再生！");
+            }
+            else
+            {
+                goalParticle.gameObject.SetActive(false);
+            }
         }
     }
 
@@ -74,7 +110,6 @@ public class GoalTrigger : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
 
-        // 次のシーンへ遷移
         Invoke("LoadNextScene", waitTime);
     }
 
@@ -82,7 +117,6 @@ public class GoalTrigger : MonoBehaviour
     {
         if (string.IsNullOrEmpty(nextSceneName))
         {
-            // シーン名が空の場合は次のインデックスへ
             int nextIndex = SceneManager.GetActiveScene().buildIndex + 1;
             if (nextIndex < SceneManager.sceneCountInBuildSettings)
                 SceneManager.LoadScene(nextIndex);
