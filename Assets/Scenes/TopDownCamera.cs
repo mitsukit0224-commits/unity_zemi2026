@@ -19,8 +19,8 @@ public class TopDownCamera : MonoBehaviour
     public float distance = 40f;
     public float height   = 1.5f;
 
-    private float xRotation       = 20f;
-    private float yRotation       = 0f;
+    private float xRotation        = 20f;
+    private float yRotation        = 0f;
     private float currentDistance;
     private float distanceVelocity = 0f;
 
@@ -63,15 +63,10 @@ public class TopDownCamera : MonoBehaviour
             currentDistance, distance,
             ref distanceVelocity, zoomSmoothTime);
 
-        Vector3 gravityUp = -GravityManager.GravityDirection.normalized;
-
-        Quaternion gravityFrame = Quaternion.FromToRotation(Vector3.up, gravityUp);
-        Quaternion localRot     = Quaternion.Euler(xRotation, yRotation, 0f);
-        Quaternion worldRot     = gravityFrame * localRot;
-
+        Quaternion worldRot = Quaternion.Euler(xRotation, yRotation, 0f);
         Vector3 offset = worldRot * new Vector3(0f, height, -currentDistance);
 
         transform.position = player.position + offset;
-        transform.LookAt(player.position + gravityUp * height * 0.5f, gravityUp);
+        transform.LookAt(player.position + Vector3.up * height * 0.5f);
     }
 }
