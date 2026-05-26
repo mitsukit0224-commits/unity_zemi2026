@@ -70,7 +70,7 @@ public class GravityManager : MonoBehaviour
             SetGravity(Vector3.down);
     }
 
-    void SetGravity(Vector3 newDirection)
+    public void SetGravity(Vector3 newDirection)
     {
         newDirection = SnapToAxis(newDirection);
         GravityDirection = newDirection;

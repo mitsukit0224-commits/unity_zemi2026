@@ -33,7 +33,7 @@ public class StageHighlighter : MonoBehaviour
             target.material = highlightMaterial;
     }
 
-    void ResetAllWalls()
+    public void ResetAllWalls()
     {
         wallUp.material      = defaultMaterial;
         wallDown.material    = defaultMaterial;
