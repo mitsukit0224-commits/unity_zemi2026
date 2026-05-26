@@ -80,7 +80,7 @@ public class MovingFakeButton : MonoBehaviour
         else
             Debug.LogWarning("deathUIが設定されていません！");
 
-        var playerMovement = FindObjectOfType<PlayerMovement>();
+        var playerMovement = FindObjectOfType<PlayerMovement1>();
         if (playerMovement != null)
             playerMovement.enabled = false;
 

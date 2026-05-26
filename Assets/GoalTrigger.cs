@@ -99,7 +99,7 @@ public class GoalTrigger : MonoBehaviour
         if (clearUI != null)
             clearUI.SetActive(true);
 
-        var playerMovement = FindObjectOfType<PlayerMovement>();
+        var playerMovement = FindObjectOfType<PlayerMovement1>();
         if (playerMovement != null)
             playerMovement.enabled = false;
 
