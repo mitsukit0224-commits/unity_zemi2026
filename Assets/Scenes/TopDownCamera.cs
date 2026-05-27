@@ -5,16 +5,13 @@ public class TopDownCamera : MonoBehaviour
 {
     [Header("── マウス感度 ──")]
     public float mouseSensitivity = 5f;
-
     [Header("── ズーム ──")]
     public float minDistance    = 2f;
     public float maxDistance    = 60f;
     public float zoomSpeed      = 5f;
     public float zoomSmoothTime = 0.1f;
-
     [Header("── 追従対象 ──")]
     public Transform player;
-
     [Header("── カメラ位置 ──")]
     public float distance = 40f;
     public float height   = 1.5f;
@@ -34,26 +31,16 @@ public class TopDownCamera : MonoBehaviour
     void LateUpdate()
     {
         if (player == null) return;
-
         var mouse = Mouse.current;
         if (mouse == null) return;
 
         if (mouse.leftButton.isPressed)
         {
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible   = false;
-
             float mouseX = mouse.delta.x.ReadValue() * mouseSensitivity * Time.deltaTime;
             float mouseY = mouse.delta.y.ReadValue() * mouseSensitivity * Time.deltaTime;
-
             xRotation -= mouseY;
             xRotation  = Mathf.Clamp(xRotation, -80f, 80f);
             yRotation += mouseX;
-        }
-        else
-        {
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible   = true;
         }
 
         float scroll = mouse.scroll.y.ReadValue();
@@ -65,7 +52,6 @@ public class TopDownCamera : MonoBehaviour
 
         Quaternion worldRot = Quaternion.Euler(xRotation, yRotation, 0f);
         Vector3 offset = worldRot * new Vector3(0f, height, -currentDistance);
-
         transform.position = player.position + offset;
         transform.LookAt(player.position + Vector3.up * height * 0.5f);
     }

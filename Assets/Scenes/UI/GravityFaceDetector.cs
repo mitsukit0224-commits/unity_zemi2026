@@ -1,37 +1,62 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class GravityFaceDetector : MonoBehaviour
 {
     public Camera uiCamera;
     public StageHighlighter highlighter;
-    public GravityManagerUI gravityManager;
+    public GravityManager gravityManager;
+
+    private GravityFace? selectedFace = null;
+    private int uiLayerMask;
+
+    void Start()
+    {
+        uiLayerMask = LayerMask.GetMask("UI");
+    }
 
     void Update()
     {
-        if (!Input.GetMouseButtonDown(0)) return;
+        var mouse = Mouse.current;
+        if (mouse == null) return;
+        if (!mouse.leftButton.wasPressedThisFrame) return;
 
-        Ray ray = uiCamera.ScreenPointToRay(Input.mousePosition);
-        if (!Physics.Raycast(ray, out RaycastHit hit)) return;
-        if (hit.collider.gameObject != gameObject) return;
+        Vector2 mousePos = mouse.position.ReadValue();
 
-        GravityFace face = GetFaceDirection(hit.normal);
-        highlighter.Highlight(face);
-        OnFaceClicked(face);
+        Rect rect = uiCamera.rect;
+        Vector2 viewportPos = new Vector2(
+            (mousePos.x / Screen.width - rect.x) / rect.width,
+            (mousePos.y / Screen.height - rect.y) / rect.height
+        );
+
+        if (viewportPos.x < 0 || viewportPos.x > 1 ||
+            viewportPos.y < 0 || viewportPos.y > 1) return;
+
+        Ray ray = uiCamera.ViewportPointToRay(viewportPos);
+
+        if (!Physics.Raycast(ray, out RaycastHit hit, 1000f, uiLayerMask)) return;
+
+        // GravityFaceTagを取得
+        GravityFaceTag faceTag = hit.collider.GetComponent<GravityFaceTag>();
+        if (faceTag == null) return;
+
+        GravityFace face = faceTag.face;
+        Debug.Log("選択した面: " + face);
+
+        if (selectedFace == face)
+        {
+            ApplyGravity(face);
+            selectedFace = null;
+            highlighter.ResetAllWalls();
+        }
+        else
+        {
+            selectedFace = face;
+            highlighter.Highlight(face);
+        }
     }
 
-    GravityFace GetFaceDirection(Vector3 normal)
-    {
-        Vector3 localNormal = transform.InverseTransformDirection(normal);
-
-        if (localNormal.y >  0.9f) return GravityFace.Up;
-        if (localNormal.y < -0.9f) return GravityFace.Down;
-        if (localNormal.x >  0.9f) return GravityFace.Right;
-        if (localNormal.x < -0.9f) return GravityFace.Left;
-        if (localNormal.z >  0.9f) return GravityFace.Forward;
-                                    return GravityFace.Back;
-    }
-
-    void OnFaceClicked(GravityFace face)
+    void ApplyGravity(GravityFace face)
     {
         Vector3 dir = face switch
         {
